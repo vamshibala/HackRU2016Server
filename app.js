@@ -1,12 +1,15 @@
 var express = require("express");
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var _ = require('underscore');
 var pollSearch = require('./poll-search.js');
 var RankingSchema = require('./ranking.js');
+var PollSchema = require('./poll.js');
 var app = express();
 var port = 3000;
 
 var Ranking = mongoose.model('Ranking',RankingSchema);
+var Poll = mongoose.model('Poll',PollSchema);
 
 app.use(bodyParser);
 
@@ -28,7 +31,13 @@ app.listen(port, function(){
 // ONLY HARAN'S CHANGES PAST THIS POINT
 
 app.get('/REST/search', function(req,res){
-	res.send(pollSearch(req.body.keywords));
+	res.send(_.map(pollSearch(req.body.keywords),function(poll){
+		return {
+			owner : poll.owner.username,
+			title : poll.title,
+			date : poll.date
+		}
+	}));
 });
 
 app.post('/REST/ranking', function(req,res){
