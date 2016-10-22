@@ -1,18 +1,38 @@
 var express = require("express");
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var UserSchema = require("./user.js");
 var pollSearch = require('./poll-search.js');
 var RankingSchema = require('./ranking.js');
 var app = express();
 var port = 3000;
 
-var Ranking = mongoose.model('Ranking',RankingSchema);
+var Ranking = mongoose.model('Ranking', RankingSchema);
+var User = mongoose.model("Users", UserSchema);
 
 app.use(bodyParser);
 
-app.get("/", function(req, res){
-
-	res.send("This is the home page");
+app.get("/REST/signup", function(req, res){
+	
+	var params = req.body;
+	params.username;
+	params.firstname;
+	params.lastname;
+	params.phone;
+	params.pollsOwned;
+	params.pollsSubmitted;
+	
+	User.create(params, function(error, User){
+	
+		if(error){
+		
+			res.status(404).send("User already exists");;
+			
+		}
+	
+	
+	});
+	
 
 });
 
