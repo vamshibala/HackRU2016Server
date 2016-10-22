@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "\"This is the server-side for the hackRU project\"",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vb239/HackRU2016Server.git"
+  },
+  "author": "Vam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vb239/HackRU2016Server/issues"
+  },
+  "homepage": "https://github.com/vb239/HackRU2016Server#readme"
+}
