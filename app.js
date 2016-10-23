@@ -1,5 +1,6 @@
 var express = require("express");
 var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
 
 mongoose.connect("mongodb://localhost/HackRU2016Server");
 
@@ -14,10 +15,12 @@ var Ranking = mongoose.model('Ranking',RankingSchema);
 var Poll = mongoose.model('Poll',PollSchema);
 var User = mongoose.model("Users", UserSchema);
 
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 
-app.get("/REST/signup/:username/:password/:firstname/:lastname/:phone", function(req, res){
+app.get("/REST/signup", function(req, res){
 	
-	User.create(req.params, function(err, user){
+	User.create(req.body, function(err, user){
 		
 		if(err){
 		
@@ -33,9 +36,9 @@ app.get("/REST/signup/:username/:password/:firstname/:lastname/:phone", function
 
 });
 
-app.get("/REST/login/:username/:password", function(req, res){	
+app.get("/REST/login", function(req, res){	
 	
-	User.findOne(req.params, function(err, user){
+	User.findOne(req.body, function(err, user){
 	
 		if(err){
 		
@@ -52,8 +55,8 @@ app.get("/REST/login/:username/:password", function(req, res){
 });
 
 
-app.get('/REST/search/:keywords', function(req,res){
-	res.send(_.map(pollSearch(req.params.keywords),function(poll){
+app.get('/REST/search', function(req,res){
+	res.send(_.map(pollSearch(req.body.keywords),function(poll){
 		return {
 			owner : poll.owner.username,
 			title : poll.title,
@@ -64,7 +67,7 @@ app.get('/REST/search/:keywords', function(req,res){
 
 app.post('/REST/ranking', function(req,res){
 	// GET A RANKING JSON, STORE
-	var ranking = req.params;
+	var ranking = req.body;
 	Ranking.create(ranking,function(err,rankingFromDB){
 		if (err) res.sendStatus(404);
 		else {
@@ -73,9 +76,9 @@ app.post('/REST/ranking', function(req,res){
 	});
 });
 
-app.get('/REST/poll/:username/:date/:title', function(req,res){
+app.get('/REST/poll', function(req,res){
 	
-	Poll.findOne(req.params, function(err, poll){
+	Poll.findOne(req.body, function(err, poll){
 	
 		if(err){
 		
@@ -91,9 +94,9 @@ app.get('/REST/poll/:username/:date/:title', function(req,res){
 	
 });
 
-app.post('/REST/poll/:owner/:date/:title/:list/:rankings/:keywords', function(req,res){
+app.post('/REST/poll', function(req,res){
 	
-	Poll.create(req.params, function(err, poll){
+	Poll.create(req.body, function(err, poll){
 	
 		if(err){
 		
@@ -114,4 +117,3 @@ app.listen(port, function(){
 	console.log("Server is running on port: " + port);
 
 });
-
