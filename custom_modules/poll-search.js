@@ -1,4 +1,5 @@
-var PollSchema = mongoose.require('./poll.js');
+var mongoose = require("mongoose");
+var PollSchema = require('./poll.js');
 
 var Poll = mongoose.model('Poll',PollSchema);
 

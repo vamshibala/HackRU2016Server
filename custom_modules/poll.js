@@ -3,10 +3,9 @@ var _ = require('underscore');
 var User = require('./user.js');
 var Ranking = require('./ranking.js');
 var Schema = mongoose.Schema;
-var ObjectId = mongoose.ObjectId;
 
 var Poll = new Schema({
-	id : ObjectId,
+
 	owner : User,
 	date : {
 		type : Date,
