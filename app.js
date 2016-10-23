@@ -75,13 +75,13 @@ app.post('/REST/ranking', function(req,res){
 
 app.get('/REST/poll/:username/:date/:title', function(req,res){
 	
-	Poll.findOne(req.params, functions(err, poll){
+	Poll.findOne(req.params, function(err, poll){
 	
 		if(err){
 		
 			res.sendStatus(404);
 		
-		}else{
+		} else {
 		
 			res.send(poll);
 		
